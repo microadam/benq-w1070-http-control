@@ -1,0 +1,10 @@
+{
+  "name": "benq-w1070-http-control",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^2.0.5"
+  }
+}
