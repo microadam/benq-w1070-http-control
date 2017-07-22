@@ -9,7 +9,7 @@ function serialConnector() {
 
   function connect () {
     emitter = new EventEmitter()
-    serialPort = new SerialPort('/dev/cu.usbserial', {
+    serialPort = new SerialPort('/dev/ttyUSB0', {
       baudrate: 57600
     })
     serialPort.on('open', function () {
