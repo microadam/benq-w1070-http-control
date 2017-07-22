@@ -5,6 +5,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "serialport": "^2.0.5"
+    "primus": "^3.0.2",
+    "primus-emitter": "^3.1.0",
+    "serialport": "2.0.5",
+    "ws": "^1.1.0"
   }
 }
