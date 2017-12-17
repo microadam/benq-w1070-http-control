@@ -16,6 +16,6 @@ curl http://127.0.0.1:7638/hdmi1
 curl http://127.0.0.1:7638/hdmi2
 ```
 
-Also exposes a websocket server for listening for events of when the projector turns on or off. This is done using [Primus](https://github.com/primus/primus)
+Also exposes a websocket server for listening for events of when the projector turns on or off. This is done using [Primus](https://github.com/primus/primus). See `test.js` for an example of how to use.
 
 Disclaimer: this was hacked together in a few hours, it works for my use case, but your mileage may vary. Please open an issue if you have any questions and I will do by best to respond
