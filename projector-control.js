@@ -1,8 +1,24 @@
 var Primus = require('primus')
 var Emitter = require('primus-emitter')
 var http = require('http')
+var mqtt = require('mqtt')
 var executeSerialCommand = require('./serial-connector')()
 var executeAction = require('./action-executer')(executeSerialCommand)
+
+var mqttClient = null
+if (process.env.MQTT) {
+  mqttClient = mqtt.connect(process.env.MQTT)
+  mqttClient.on('connect', function() {
+    mqttClient.subscribe('benqProjectorControl/#')
+  })
+  mqttClient.on('message', function(topic, message) {
+    if (topic === 'benqProjectorControl/power/set') {
+      var state = message.toString() === 'true' ? 'on' : 'off'
+      console.log('Changing state based on MQTT:', state)
+      executeAction(state)
+    }
+  })
+}
 
 var server = http.createServer(function (req, res) {
   console.log(req.url);
@@ -47,9 +63,15 @@ setInterval(function () {
       if (status === '*POW=OFF#') {
         console.log('PROJECTOR OFF')
         primus.send('off')
+        if (mqttClient) {
+          mqttClient.publish('benqProjectorControl/power', 'false')
+        }
       } else if (status === '*POW=ON#') {
         console.log('PROJECTOR ON')
         primus.send('on')
+        if (mqttClient) {
+          mqttClient.publish('benqProjectorControl/power', 'true')
+        }
       }
     }
     currentState = status
